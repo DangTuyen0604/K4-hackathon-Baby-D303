@@ -1,0 +1,400 @@
+{
+  "suite_name": "ViniBot announcement grounding eval",
+  "suite_version": 1,
+  "generated_at": "2026-07-31T16:35:17.238490+07:00",
+  "model": "google/gemini-2.5-flash",
+  "cases": [
+    {
+      "id": "official_source_filter",
+      "question": "Hôm nay có thông báo chính thức nào về hạn nộp bài?",
+      "mode": "daily_summary",
+      "tags": [
+        "official_source",
+        "fact_grounding"
+      ],
+      "official_candidate_ids": [
+        "official-deadline"
+      ],
+      "logistics_candidate_ids": [
+        "official-deadline"
+      ],
+      "runs": [
+        {
+          "raw_model_output": "{\n  \"answer\": \"Hạn nộp bài là 17:00 ngày 02/08. Nộp tại https://codelabs.example/submit.\",\n  \"selected_message_ids\": [\n    \"official-deadline\"\n  ]\n}",
+          "model_result": {
+            "answer": "Hạn nộp bài là 17:00 ngày 02/08. Nộp tại https://codelabs.example/submit.",
+            "selected_message_ids": [
+              "official-deadline"
+            ]
+          },
+          "final_answer": "Hạn nộp bài là 17:00 ngày 02/08. Nộp tại https://codelabs.example/submit.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 09:00 · ADMIN](https://discord.com/channels/eval/announcements/official-deadline)",
+          "selected_message_ids": [
+            "official-deadline"
+          ],
+          "allowed_facts": [
+            "17:00",
+            "https://codelabs.example/submit",
+            "ngày 02/08"
+          ],
+          "answer_facts": [
+            "17:00",
+            "https://codelabs.example/submit",
+            "ngày 02/08"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "ignore_staff_chatter",
+      "question": "Tóm tắt các thông báo mới hôm nay.",
+      "mode": "daily_summary",
+      "tags": [
+        "noise_filter"
+      ],
+      "official_candidate_ids": [
+        "staff-thanks",
+        "official-slides"
+      ],
+      "logistics_candidate_ids": [
+        "official-slides"
+      ],
+      "runs": [
+        {
+          "raw_model_output": "{\n  \"answer\": \"Slide ngày 1 và ngày 2 đã được cập nhật trên codelabs.\",\n  \"selected_message_ids\": [\n    \"official-slides\"\n  ]\n}",
+          "model_result": {
+            "answer": "Slide ngày 1 và ngày 2 đã được cập nhật trên codelabs.",
+            "selected_message_ids": [
+              "official-slides"
+            ]
+          },
+          "final_answer": "Slide ngày 1 và ngày 2 đã được cập nhật trên codelabs.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 10:05 · MOD](https://discord.com/channels/eval/announcements/official-slides)",
+          "selected_message_ids": [
+            "official-slides"
+          ],
+          "allowed_facts": [],
+          "answer_facts": [],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "latest_update_wins",
+      "question": "Cho tôi 1 thông báo mới nhất về Workshop 3.",
+      "mode": "latest_announcements",
+      "tags": [
+        "latest_update",
+        "fact_grounding"
+      ],
+      "official_candidate_ids": [
+        "workshop-old",
+        "workshop-new"
+      ],
+      "logistics_candidate_ids": [
+        "workshop-new"
+      ],
+      "runs": [
+        {
+          "raw_model_output": "{\n  \"answer\": \"Workshop 3 đã được dời từ 18:00 sang 20:00 ngày 31/07. Link Zoom: https://zoom.example/workshop3.\",\n  \"selected_message_ids\": [\n    \"workshop-new\"\n  ]\n}",
+          "model_result": {
+            "answer": "Workshop 3 đã được dời từ 18:00 sang 20:00 ngày 31/07. Link Zoom: https://zoom.example/workshop3.",
+            "selected_message_ids": [
+              "workshop-new"
+            ]
+          },
+          "final_answer": "Workshop 3 đã được dời từ 18:00 sang 20:00 ngày 31/07. Link Zoom: https://zoom.example/workshop3.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 11:30 · ADMIN](https://discord.com/channels/eval/announcements/workshop-new)",
+          "selected_message_ids": [
+            "workshop-new"
+          ],
+          "allowed_facts": [
+            "18:00",
+            "20:00",
+            "https://zoom.example/workshop3",
+            "ngày 31/07"
+          ],
+          "answer_facts": [
+            "18:00",
+            "20:00",
+            "https://zoom.example/workshop3",
+            "ngày 31/07"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "preserve_deadline_and_link",
+      "question": "Deadline checkpoint và link nộp bài là gì?",
+      "mode": "specific_question",
+      "tags": [
+        "fact_grounding"
+      ],
+      "official_candidate_ids": [
+        "checkpoint-deadline"
+      ],
+      "logistics_candidate_ids": [
+        "checkpoint-deadline"
+      ],
+      "runs": [
+        {
+          "raw_model_output": "{\n  \"answer\": \"Deadline checkpoint là 23:59 ngày 03/08. Link nộp bài là: https://forms.example/checkpoint\",\n  \"selected_message_ids\": [\n    \"checkpoint-deadline\"\n  ]\n}",
+          "model_result": {
+            "answer": "Deadline checkpoint là 23:59 ngày 03/08. Link nộp bài là: https://forms.example/checkpoint",
+            "selected_message_ids": [
+              "checkpoint-deadline"
+            ]
+          },
+          "final_answer": "Deadline checkpoint là 23:59 ngày 03/08. Link nộp bài là: https://forms.example/checkpoint\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 12:00 · MOD](https://discord.com/channels/eval/announcements/checkpoint-deadline)",
+          "selected_message_ids": [
+            "checkpoint-deadline"
+          ],
+          "allowed_facts": [
+            "23:59",
+            "https://forms.example/checkpoint",
+            "ngày 03/08"
+          ],
+          "answer_facts": [
+            "23:59",
+            "https://forms.example/checkpoint",
+            "ngày 03/08"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "no_official_data",
+      "question": "Có thông báo chính thức nào về lịch thi không?",
+      "mode": "daily_summary",
+      "tags": [
+        "no_data"
+      ],
+      "official_candidate_ids": [
+        "staff-smalltalk"
+      ],
+      "logistics_candidate_ids": [],
+      "runs": [
+        {
+          "raw_model_output": "",
+          "model_result": {
+            "answer": "Không tìm thấy thông báo chính thức phù hợp.",
+            "selected_message_ids": []
+          },
+          "final_answer": "Không tìm thấy thông báo chính thức phù hợp.",
+          "selected_message_ids": [],
+          "allowed_facts": [],
+          "answer_facts": [],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": "stable_repeated_answer",
+      "question": "Workshop tối nay diễn ra lúc nào?",
+      "mode": "specific_question",
+      "tags": [
+        "stability",
+        "fact_grounding"
+      ],
+      "official_candidate_ids": [
+        "stable-workshop"
+      ],
+      "logistics_candidate_ids": [
+        "stable-workshop"
+      ],
+      "runs": [
+        {
+          "raw_model_output": "{\n  \"answer\": \"Workshop tối nay bắt đầu lúc 20:30.\",\n  \"selected_message_ids\": [\n    \"stable-workshop\"\n  ]\n}",
+          "model_result": {
+            "answer": "Workshop tối nay bắt đầu lúc 20:30.",
+            "selected_message_ids": [
+              "stable-workshop"
+            ]
+          },
+          "final_answer": "Workshop tối nay bắt đầu lúc 20:30.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 14:00 · ADMIN](https://discord.com/channels/eval/announcements/stable-workshop)",
+          "selected_message_ids": [
+            "stable-workshop"
+          ],
+          "allowed_facts": [
+            "20:30",
+            "https://zoom.example/stable",
+            "tối nay"
+          ],
+          "answer_facts": [
+            "20:30",
+            "tối nay"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        },
+        {
+          "raw_model_output": "{\n  \"answer\": \"Workshop tối nay bắt đầu lúc 20:30.\",\n  \"selected_message_ids\": [\n    \"stable-workshop\"\n  ]\n}",
+          "model_result": {
+            "answer": "Workshop tối nay bắt đầu lúc 20:30.",
+            "selected_message_ids": [
+              "stable-workshop"
+            ]
+          },
+          "final_answer": "Workshop tối nay bắt đầu lúc 20:30.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 14:00 · ADMIN](https://discord.com/channels/eval/announcements/stable-workshop)",
+          "selected_message_ids": [
+            "stable-workshop"
+          ],
+          "allowed_facts": [
+            "20:30",
+            "https://zoom.example/stable",
+            "tối nay"
+          ],
+          "answer_facts": [
+            "20:30",
+            "tối nay"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        },
+        {
+          "raw_model_output": "{\n  \"answer\": \"Workshop tối nay bắt đầu lúc 20:30.\",\n  \"selected_message_ids\": [\n    \"stable-workshop\"\n  ]\n}",
+          "model_result": {
+            "answer": "Workshop tối nay bắt đầu lúc 20:30.",
+            "selected_message_ids": [
+              "stable-workshop"
+            ]
+          },
+          "final_answer": "Workshop tối nay bắt đầu lúc 20:30.\n\n**Nguồn đã xác thực**\n- [#thông-báo-chung · 31/07/2026 14:00 · ADMIN](https://discord.com/channels/eval/announcements/stable-workshop)",
+          "selected_message_ids": [
+            "stable-workshop"
+          ],
+          "allowed_facts": [
+            "20:30",
+            "https://zoom.example/stable",
+            "tối nay"
+          ],
+          "answer_facts": [
+            "20:30",
+            "tối nay"
+          ],
+          "unexpected_facts": [],
+          "checks": {
+            "selected_ids_match": true,
+            "forbidden_ids_absent": true,
+            "selected_ids_are_official": true,
+            "required_facts_present": true,
+            "forbidden_facts_absent": true,
+            "required_terms_present": true,
+            "no_unexpected_facts": true,
+            "no_data_behavior": true
+          },
+          "passed": true
+        }
+      ],
+      "stability": {
+        "selection_stable": true,
+        "all_runs_passed": true
+      },
+      "passed": true
+    }
+  ],
+  "summary": {
+    "passed_cases": 6,
+    "total_cases": 6
+  }
+}

@@ -1,0 +1,153 @@
+﻿chủ đề,,,,,,,,,,,nội dung
+Chia sẻ lộ trình Từ ý tưởng đến sản phẩm AI thực tế,,,,,,,,,,,"Đây là bộ tài liệu mình xây dựng trong quá trình làm AI Trainer và triển khai các sản phẩm AI cho doanh nghiệp. Nội dung tập trung vào cách ứng dụng Vibe Coding để xây dựng một sản phẩm AI từ đầu đến cuối.
+
+Trong tài liệu, mình chia sẻ toàn bộ quy trình:
+Tìm và đánh giá ý tưởng -> Tư duy sản phẩm & thiết kế giải pháp > Nghiên cứu và xác thực nhu cầu người dùng -> Xây dựng MVP và hoàn thiện sản phẩm AI > Kỹ năng làm việc với AI để debug và xử lý lỗi trong quá trình phát triển.
+
+Đây là phiên bản phát hành từ tháng 04/2026. Hiện mình chưa cập nhật lên phiên bản mới nhất nên một số nội dung và công cụ có thể đã thay đổi. Tuy nhiên, tư duy, phương pháp và quy trình trong tài liệu vẫn là những gì mình đang áp dụng khi phát triển sản phẩm AI đến thời điểm hiện tại.
+
+Hy vọng tài liệu sẽ hữu ích, đặc biệt với những bạn mới bắt đầu xây dựng sản phẩm AI hoặc đang dùng Vibe Coding để build
+
+Trước đây mình đã chia sẻ tài liệu này trên một số cộng đồng và cũng có hơn 500.000 reached. Và mình chia sẻ miễn phí toàn bộ tài liệu và mã nguồn, các bạn có thể tham khảo, học tập và sử dụng theo nhu cầu của mình.
+
+Chúc mọi người xây dựng được những sản phẩm AI thật sự hữu ích! 
+Link tài liệu: https://learning.aiecos.ai/
+Link repo: https://github.com/aiecosvietnam/learning-ai"
+"Làm Đề Tài AI: Từ ""Vibe Prompting"" Đến Quy Trình Kiểm Soát Dự Án",,,,,,,,,,,"Vấn đề: Tại sao AI làm sai liên tục?
+Khi bắt đầu làm đề tài AI, hầu hết mọi người (kể cả mình) đều mắc lỗi này: mô tả cảm giác rồi để AI tự làm tất cả. Kết quả? AI hiểu sai yêu cầu, code chạy lỗi tùm lum, hoặc làm xong rồi mới phát hiện đi sai hướng.
+Sau nhiều lần ""đốt"" deadline, mình rút ra một quy trình làm việc theo từng vòng lặp — không phải để thay thế tư duy của mình, mà để kiểm soát AI thay vì bị AI kiểm soát.
+
+Quy trình 6 bước: Đọc → Hiểu → Kế hoạch → Duyệt → Triển khai → Kiểm tra
+Bước 1: Đọc Context
+Không vội yêu cầu AI code ngay. Hãy cung cấp:
+Mô tả bài toán rõ ràng
+Dữ liệu mẫu (nếu có)
+Ràng buộc kỹ thuật (framework, thư viện, giới hạn phần cứng)
+Output mong đợi (định dạng file, metric đánh giá)
+
+Bước 2: Xác nhận cách hiểu
+Yêu cầu AI tóm tắt lại yêu cầu bằng ngôn ngữ của nó. Nếu AI hiểu sai ở đây, bạn sửa ngay — đừng để đến lúc code xong mới phát hiện.
+Prompt mẫu:
+""Trước khi làm, hãy tóm tắt lại yêu cầu của tôi theo 3 phần: (1) Bài toán cần giải, (2) Input/Output, (3) Các ràng buộc kỹ thuật. Đồng ý rồi mới bắt đầu.""
+
+Bước 3: Lập kế hoạch
+Bắt buộc AI phải chia nhỏ công việc thành các task cụ thể, có thứ tự.
+Ví dụ cho đề tài NLP:
+Tiền xử lý dữ liệu (cleaning, tokenization)
+EDA — phân tích phân phối nhãn
+Xây dựng baseline model
+Thử nghiệm 2-3 kiến trúc nâng cao
+Đánh giá và so sánh kết quả
+
+Bước 4: Duyệt kế hoạch
+Đây là bước quan trọng nhất. Bạn phải đọc kế hoạch của AI, chỉnh sửa, bổ sung hoặc loại bỏ task không phù hợp.
+
+Bước 5: Triển khai từng bước
+Không yêu cầu AI làm một lèo cả project. Hãy làm từng task một, kiểm tra kết quả trước khi sang task tiếp theo.
+Cách này giúp:
+Dễ debug khi lỗi xảy ra
+Bạn vẫn nắm được logic từng phần
+Tránh ""context overflow"" — AI quên mất yêu cầu ban đầu
+
+Bước 6: Kiểm tra và điều chỉnh
+Sau mỗi task, chạy thử, kiểm tra output. Nếu sai, đưa log lỗi cụ thể cho AI sửa, không mô tả chung chung."
+Chia sẻ SKILL Tạo slide nhanh và đẹp với Frontend Slides,,,,,,,,,,,"Trong các buổi học, hoàn thành slide sớm có thể giúp nhóm được demo trước, nhận feedback sớm và ""nhận điểm thưởng"". Tuy nhiên, slide vẫn cần trực quan, dễ hiểu, bố cục đẹp và không mang cảm giác như một template AI. Vậy nên mình muốn chia sẻ một skill khá hữu ích mà mình đã áp dụng trong quá trình học:
+https://github.com/zarazhangrui/frontend-slides
+
+Frontend Slides là gì?
+Đây là skill dành cho AI coding agent, hỗ trợ tạo bài thuyết trình HTML từ: Outline, ý tưởng hoặc source code
+Skill có thể xây dựng storyline, chia nội dung thành từng slide và thiết kế bố cục, diagram, typography, animation phù hợp. Agent cũng có thể tạo trước nhiều style preview để người dùng lựa chọn.
+
+Cách sử dụng
+Với Claude Code, có thể cài plugin theo hướng dẫn trong repo và gọi bằng: /frontend-slides:frontend-slides
+Hoặc clone repo vào máy, gửi đường dẫn local cho agent khác và yêu cầu sử dụng skill từ file SKILL.md
+
+Lưu ý
+Nên cung cấp đầy đủ bối cảnh dự án và những nội dung đã brainstorm trước đó cùng agent.
+Khi hiểu toàn bộ câu chuyện của dự án, agent sẽ tạo được một bài thuyết trình có storyline rõ ràng, đẹp, trực quan và đủ tốt để demo.
+Đặc biệt trong những buổi lab có thời gian chuẩn bị ngắn, đây có thể là công cụ hữu ích để tiết kiệm thời gian làm slide, giúp nhóm tập trung nhiều hơn vào sản phẩm và phần demo.
+
+Một vài skill khác mình đang dùng
+🔗 Superpowers
+Giúp agent làm việc có quy trình hơn, chính xác hơn với những task phức tạp hoặc kéo dài.
+🔗 Caveman
+Giúp câu trả lời của agent ngắn gọn, trực tiếp, ít dài dòng và tiết kiệm token hơn.
+
+Không nhất thiết phải cài thật nhiều skill. Quan trọng nhất vẫn là chọn đúng skill cho vấn đề mình đang gặp phải.
+GitHub
+GitHub - zarazhangrui/frontend-slides: Create beautiful slides on t..."
+Knowledge Distillation: Kỹ thuật truyền Tri Thức giữa các Mô hình AI,,,,,,,,,,,"Knowledge Distillation (KD - Chưng cất kiến thức) là kỹ thuật máy học giúp chuyển giao tri thức từ một mô hình phức tạp (teacher) sang mô hình đơn giản hơn (student) nhằm tạo ra các mô hình nhỏ gọn, chạy nhanh hơn trên thiết bị hạn chế tài nguyên mà vẫn giữ được phần lớn hiệu suất.
+
+Vì sao kỹ thuật này ra đời?
+Các mô hình AI tiên tiến (như GPT-4, BERT, Vision Transformers) có kích thước khổng lồ với hàng tỷ tham số, dẫn đến nhiều thách thức:
+Khó triển khai: Không thể chạy trên điện thoại, thiết bị IoT hoặc máy tính thông thường.
+Chi phí cao: Yêu cầu phần cứng đắt đỏ như GPU, TPU để vận hành.
+Độ trễ lớn: Tốc độ xử lý chậm, không đáp ứng được ứng dụng thời gian thực.
+Rủi ro bảo mật: Buộc phải gửi dữ liệu nhạy cảm của người dùng lên đám mây.
+
+Năm 2015, Geoffrey Hinton và các cộng sự đã giới thiệu khái niệm này để ""chưng cất"" tinh hoa từ mô hình phức tạp vào mô hình nhỏ.
+
+Cách thức hoạt động
+Thay vì chỉ huấn luyện bằng nhãn cứng (hard label) như cách truyền thống, KD truyền đạt tri thức thông qua nhãn mềm (soft labels/soft targets):
+Huấn luyện Teacher: Đào tạo mô hình lớn đạt hiệu suất cao nhất.
+Trích xuất ""soft targets"": Logits từ Teacher được áp dụng hàm Softmax với hệ số nhiệt độ (T) để tạo ra phân bố xác suất mềm. Cách này giúp Student học được các thông tin tinh tế (ví dụ: số 7 có nét thẳng hơi giống số 1 nhưng khác hoàn toàn số 8).
+Huấn luyện Student: Dạy mô hình nhỏ bắt chước cả nhãn thật lẫn phân bố xác suất mềm từ Teacher.
+
+Kỹ thuật tiên tiến hiện nay
+Dual-Space KD (DSKD - 2024): Căn chỉnh đầu ra của teacher và student trên cả không gian từ vựng lẫn biểu diễn token.
+Feature-based Distillation: Trích xuất kiến thức từ các tầng trung gian thay vì chỉ dùng đầu ra cuối cùng của teacher.
+Self-Distillation: Tự chưng cất bằng cách dùng các phiên bản trước của chính mình làm teacher.
+Chưng cất cho LLMs: Thu nhỏ các mô hình ngôn ngữ lớn (GPT, BERT) để chạy hiệu quả trên di động.
+
+Cre: https://200lab.io/blog/knowledge-distillation-la-gi"
+"Cú nổ Big Bang của thế giới AI: Kiến trúc ""Transformer""",,,,,,,,,,,"Nhắc đến AI hiện nay, chắc hẳn chúng ta nghĩ ngay đến sức mạnh của các Mô hình Ngôn ngữ Lớn (LLM). Nhưng bạn có biết, toàn bộ kỷ nguyên rực rỡ này đều bắt nguồn từ một ""bước ngoặt"" lịch sử vào năm 2017? ⏳
+
+Đó là khi đội ngũ nghiên cứu tại Google công bố bài báo khoa học chấn động: ""Attention Is All You Need"", chính thức giới thiệu kiến trúc Transformer.
+
+Vậy điều gì đã khiến Transformer thay đổi hoàn toàn cuộc chơi? 🎯
+
+🐢 Vấn đề trước năm 2017: Các mô hình AI thời đó xử lý ngôn ngữ theo kiểu tuần tự ""đọc từng chữ một"". Cách này rất chậm và AI thường mắc bệnh ""não cá vàng"" — khi xử lý những đoạn văn bản dài, chúng rất dễ quên mất ngữ cảnh ở đoạn đầu.
+
+⚡ Phép thuật của Transformer: Kiến trúc này mang đến một cơ chế cốt lõi mang tên Self-Attention (Tự chú ý). Thay vì cặm cụi đọc từng từ, Transformer cho phép AI ""nhìn"" và xử lý toàn bộ văn bản cùng một lúc. Nó tự động đánh giá xem những từ nào có mối liên hệ mật thiết với nhau để tạo ra ý nghĩa, bất kể chúng cách xa nhau đến đâu trong một câu.
+
+💡 Ví dụ: Trong câu ""I arrived at the bank after crossing the river."" — Transformer sẽ ngay lập tức kết nối từ ""bank"" với ""river"" để hiểu đây là bờ sông, chứ không phải ngân hàng.
+
+Sự thay đổi mang tính thời đại 🌍
+
+Chính nhờ khả năng xử lý song song và không còn bị phụ thuộc vào thứ tự trước - sau, Transformer cho phép các nhà khoa học ""nhồi"" một lượng dữ liệu khổng lồ vào mô hình với tốc độ huấn luyện chưa từng có.
+
+Không có Transformer, sẽ không có GPT-4, không có Gemini, và không có kỷ nguyên bùng nổ của các siêu AI ngôn ngữ như hiện tại. Hàng tỷ tỷ tham số mà chúng ta thường nghe báo đài nhắc tới — tất cả đều đang chạy trên bộ khung vững chắc của kiến trúc này. 🏗️
+
+Một ý tưởng ra đời cách đây gần một thập kỷ đã và đang định hình lại cách nhân loại làm việc và sáng tạo mỗi ngày. Theo bạn, điều gì sẽ là ""bước nhảy vọt"" tiếp theo của thế giới AI?"
+8 Kiến trúc RAG dành cho AI Engineers,,,,,,,,,,,"Hôm nay mình muốn chia sẻ với các bạn về các kiến trúc RAG và khi nào nên sử dụng chúng.
+
+Naive RAG
+Truy xuất tài liệu dựa trên độ tương đồng giữa embedding của câu hỏi và tài liệu.
+Phù hợp với các câu hỏi đơn giản, mang tính tra cứu thông tin.
+
+Multimodal RAG
+Xử lý nhiều loại dữ liệu như: text, ảnh, âm thanh,...
+Phù hợp với các bài toán đa phương thức, kết hợp nhiều loại dữ liệu để trả lời.
+
+HyDE (Hypothetical Document Embeddings)
+Sinh ra một tài liệu giả định từ câu hỏi rồi dùng embedding của tài liệu đó để truy xuất.
+Phù hợp khi cách diễn đạt của người dùng khác với tài liệu. Đổi lại sẽ tăng chi phí và độ trễ.
+
+Corrective RAG
+Kiểm chứng kết quả truy xuất với các nguồn đáng tin cậy trước khi gửi cho LLM.
+Phù hợp với các hệ thống cần thông tin luôn mới như tin tức, pháp luật, y tế,...
+
+Graph RAG
+Chuyển nội dung thành Knowledge Graph để khai thác mối quan hệ giữa các thực thể.
+Phù hợp với các bài toán cần suy luận. Có thể đọc thêm paper Retrieval-Augmented Generation with Graphs (GraphRAG).
+
+Hybrid RAG
+Kết hợp nhiều phương pháp truy xuất trong cùng một pipeline.
+Phù hợp khi cần khai thác cả dữ liệu có cấu trúc và phi cấu trúc.
+
+Adaptive RAG
+Tự chọn cách truy xuất theo từng câu hỏi. Câu hỏi phức tạp sẽ được chia thành nhiều truy vấn nhỏ trước khi tổng hợp kết quả.
+
+Agentic RAG
+Sử dụng AI Agent để lập kế hoạch, suy luận và dùng các công cụ như Web Search, API,...
+Phù hợp với các bài toán phức tạp, cần nhiều bước xử lý."

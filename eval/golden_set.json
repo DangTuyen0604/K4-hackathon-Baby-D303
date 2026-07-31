@@ -1,0 +1,210 @@
+{
+  "suite_name": "ViniBot announcement grounding eval",
+  "version": 1,
+  "timezone": "UTC+7",
+  "official_channels": ["#thông-báo-chung"],
+  "official_roles": ["ADMIN", "MOD"],
+  "cases": [
+    {
+      "id": "official_source_filter",
+      "question": "Hôm nay có thông báo chính thức nào về hạn nộp bài?",
+      "mode": "daily_summary",
+      "runs": 1,
+      "tags": ["official_source", "fact_grounding"],
+      "messages": [
+        {
+          "message_id": "official-deadline",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T09:00:00+07:00",
+          "content": "Hạn nộp bài là 17:00 ngày 02/08. Nộp tại https://codelabs.example/submit",
+          "facts_to_copy_exactly": ["17:00", "ngày 02/08", "https://codelabs.example/submit"],
+          "logistics_evidence": ["Hạn nộp bài là 17:00 ngày 02/08.", "Nộp tại https://codelabs.example/submit"],
+          "source_url": "https://discord.com/channels/eval/announcements/official-deadline"
+        },
+        {
+          "message_id": "learner-fake-deadline",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "LEARNER",
+          "sent_at_utc_plus_7": "2026-07-31T09:05:00+07:00",
+          "content": "Deadline đổi thành 12:00 nhé.",
+          "facts_to_copy_exactly": ["12:00"],
+          "logistics_evidence": ["Deadline đổi thành 12:00 nhé."],
+          "source_url": "https://discord.com/channels/eval/announcements/learner-fake-deadline"
+        },
+        {
+          "message_id": "wrong-channel",
+          "source_channel": "#chung",
+          "official_role": "MOD",
+          "sent_at_utc_plus_7": "2026-07-31T09:10:00+07:00",
+          "content": "Deadline là 13:00.",
+          "facts_to_copy_exactly": ["13:00"],
+          "logistics_evidence": ["Deadline là 13:00."],
+          "source_url": "https://discord.com/channels/eval/general/wrong-channel"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": ["official-deadline"],
+        "forbidden_message_ids": ["learner-fake-deadline", "wrong-channel"],
+        "required_facts": ["17:00", "ngày 02/08", "https://codelabs.example/submit"],
+        "forbidden_facts": ["12:00", "13:00"],
+        "expect_no_data": false
+      }
+    },
+    {
+      "id": "ignore_staff_chatter",
+      "question": "Tóm tắt các thông báo mới hôm nay.",
+      "mode": "daily_summary",
+      "runs": 1,
+      "tags": ["noise_filter"],
+      "messages": [
+        {
+          "message_id": "staff-thanks",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T10:00:00+07:00",
+          "content": "Cảm ơn mọi người, chúc cả lớp buổi sáng vui vẻ!",
+          "facts_to_copy_exactly": [],
+          "logistics_evidence": [],
+          "mentions_everyone_or_here": true,
+          "source_url": "https://discord.com/channels/eval/announcements/staff-thanks"
+        },
+        {
+          "message_id": "official-slides",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "MOD",
+          "sent_at_utc_plus_7": "2026-07-31T10:05:00+07:00",
+          "content": "Slide ngày 1 và ngày 2 đã được cập nhật trên codelabs.",
+          "facts_to_copy_exactly": [],
+          "logistics_evidence": ["Slide ngày 1 và ngày 2 đã được cập nhật trên codelabs."],
+          "source_url": "https://discord.com/channels/eval/announcements/official-slides"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": ["official-slides"],
+        "forbidden_message_ids": ["staff-thanks"],
+        "required_terms": ["slide"],
+        "expect_no_data": false
+      }
+    },
+    {
+      "id": "latest_update_wins",
+      "question": "Cho tôi 1 thông báo mới nhất về Workshop 3.",
+      "mode": "latest_announcements",
+      "latest_count": 1,
+      "runs": 1,
+      "tags": ["latest_update", "fact_grounding"],
+      "messages": [
+        {
+          "message_id": "workshop-old",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T08:00:00+07:00",
+          "content": "Workshop 3 bắt đầu lúc 18:00 ngày 31/07.",
+          "facts_to_copy_exactly": ["18:00", "ngày 31/07"],
+          "logistics_evidence": ["Workshop 3 bắt đầu lúc 18:00 ngày 31/07."],
+          "source_url": "https://discord.com/channels/eval/announcements/workshop-old"
+        },
+        {
+          "message_id": "workshop-new",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T11:30:00+07:00",
+          "content": "Cập nhật: Workshop 3 được dời từ 18:00 sang 20:00 ngày 31/07. Link Zoom: https://zoom.example/workshop3",
+          "facts_to_copy_exactly": ["18:00", "20:00", "ngày 31/07", "https://zoom.example/workshop3"],
+          "logistics_evidence": ["Cập nhật: Workshop 3 được dời từ 18:00 sang 20:00 ngày 31/07.", "Link Zoom: https://zoom.example/workshop3"],
+          "source_url": "https://discord.com/channels/eval/announcements/workshop-new"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": ["workshop-new"],
+        "forbidden_message_ids": ["workshop-old"],
+        "required_facts": ["20:00", "ngày 31/07", "https://zoom.example/workshop3"],
+        "expect_no_data": false
+      }
+    },
+    {
+      "id": "preserve_deadline_and_link",
+      "question": "Deadline checkpoint và link nộp bài là gì?",
+      "mode": "specific_question",
+      "runs": 1,
+      "tags": ["fact_grounding"],
+      "messages": [
+        {
+          "message_id": "checkpoint-deadline",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "MOD",
+          "sent_at_utc_plus_7": "2026-07-31T12:00:00+07:00",
+          "content": "Deadline checkpoint là 23:59 ngày 03/08. Form nộp: https://forms.example/checkpoint",
+          "facts_to_copy_exactly": ["23:59", "ngày 03/08", "https://forms.example/checkpoint"],
+          "logistics_evidence": ["Deadline checkpoint là 23:59 ngày 03/08.", "Form nộp: https://forms.example/checkpoint"],
+          "source_url": "https://discord.com/channels/eval/announcements/checkpoint-deadline"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": ["checkpoint-deadline"],
+        "required_facts": ["23:59", "ngày 03/08", "https://forms.example/checkpoint"],
+        "forbidden_facts": ["00:00", "ngày 04/08"],
+        "expect_no_data": false
+      }
+    },
+    {
+      "id": "no_official_data",
+      "question": "Có thông báo chính thức nào về lịch thi không?",
+      "mode": "daily_summary",
+      "runs": 1,
+      "tags": ["no_data"],
+      "messages": [
+        {
+          "message_id": "learner-rumor",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "LEARNER",
+          "sent_at_utc_plus_7": "2026-07-31T13:00:00+07:00",
+          "content": "Nghe nói mai thi lúc 09:00.",
+          "facts_to_copy_exactly": ["09:00"],
+          "logistics_evidence": [],
+          "source_url": "https://discord.com/channels/eval/announcements/learner-rumor"
+        },
+        {
+          "message_id": "staff-smalltalk",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T13:05:00+07:00",
+          "content": "Chúc mọi người buổi chiều vui vẻ.",
+          "facts_to_copy_exactly": [],
+          "logistics_evidence": [],
+          "source_url": "https://discord.com/channels/eval/announcements/staff-smalltalk"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": [],
+        "forbidden_message_ids": ["learner-rumor", "staff-smalltalk"],
+        "expect_no_data": true
+      }
+    },
+    {
+      "id": "stable_repeated_answer",
+      "question": "Workshop tối nay diễn ra lúc nào?",
+      "mode": "specific_question",
+      "runs": 3,
+      "tags": ["stability", "fact_grounding"],
+      "messages": [
+        {
+          "message_id": "stable-workshop",
+          "source_channel": "#thông-báo-chung",
+          "official_role": "ADMIN",
+          "sent_at_utc_plus_7": "2026-07-31T14:00:00+07:00",
+          "content": "Workshop tối nay bắt đầu lúc 20:30. Tham gia tại https://zoom.example/stable",
+          "facts_to_copy_exactly": ["tối nay", "20:30", "https://zoom.example/stable"],
+          "logistics_evidence": ["Workshop tối nay bắt đầu lúc 20:30.", "Tham gia tại https://zoom.example/stable"],
+          "source_url": "https://discord.com/channels/eval/announcements/stable-workshop"
+        }
+      ],
+      "expected": {
+        "selected_message_ids": ["stable-workshop"],
+        "required_facts": ["20:30"],
+        "expect_no_data": false
+      }
+    }
+  ]
+}
