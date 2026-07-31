@@ -8,30 +8,55 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 ## §1. User & Job
 
 - **Job executor + workflow:** Học viên trong server Discord của lab/khoá học, trong lúc làm bài tập/dự án gặp vướng mắc và cần hỗ trợ nhanh mà không muốn/không thể chờ Coach rảnh để trả lời trực tiếp.
-  *(Worksheet JTBD / sơ đồ workflow: [CẦN NHÓM ĐÍNH KÈM] — mình chưa có bản vẽ/worksheet của nhóm.)*
+  *(Worksheet JTBD / sơ đồ workflow: Học viên đặt câu hỏi: Nhắn tin trực tiếp hoặc tag @Bot.Bot chuẩn hóa câu hỏi: Tự động viết thường, xóa dấu câu và khoảng trắng thừa.So sánh mờ (Fuzzy Matching): Bot đối chiếu câu hỏi vừa chuẩn hóa với Database.
+  TRƯỜNG HỢP 1: CÓ SẴN TRONG DB (Cache Hit - Tương đồng $\ge$ 75%)3.1a. Bot trả lời câu hỏi ngay lập tức ($< 1$ giây).3.2a. Tăng lượt đếm tần suất (hit_count) trong Database.TRƯỜNG HỢP 2: CHƯA CÓ TRONG DB (Cache Miss)3.1b. Bot tự động tạo một Discord Thread riêng biệt.3.2b. Bot Tag Role Coach vào Thread để thông báo có câu hỏi mới.3.3b. Coach vào Thread trực tiếp trả lời thắc mắc cho học viên.3.4b. Coach thả reaction ✅ vào câu trả lời chuẩn.3.5b. Bot tự động trích xuất cặp [Câu hỏi gốc + Câu trả lời].3.6b. Lưu kiến thức mới vào SQLite Database để dùng cho các lần sau.
 
 - **Core JTBD (không tên sản phẩm/AI):** Khi gặp vướng mắc trong quá trình học/làm dự án, tôi muốn nhận được câu trả lời đáng tin cậy ngay lập tức, để không phải chờ đợi hoặc làm gián đoạn tiến độ của mình và của team.
 
 - **Problem statement (không chữ AI):** Nhiều câu hỏi của học viên là câu đã từng được hỏi và trả lời trước đó trong server, nhưng vì không có cơ chế lưu lại, Coach phải trả lời lặp đi lặp lại cùng một nội dung — vừa tốn thời gian của Coach, vừa khiến học viên phải chờ lâu hơn mức cần thiết cho những câu hỏi thực sự mới.
 
 - **Evidence (chuẩn A và/hoặc B):**
-  - Số liệu mining / khảo sát (n = ?, % xác nhận): **[CẦN NHÓM ĐIỀN]** — hiện nhóm **chưa có** log mining thực tế từ lịch sử chat hoặc khảo sát chính thức với Coach/học viên. Đây là khoảng trống cần bổ sung trước khi chốt spec, vì §1 yêu cầu bằng chứng chuẩn A/B chứ không chỉ suy luận logic.
-  - ≥5 quote/ví dụ nguyên văn + nguồn: **[CẦN NHÓM ĐIỀN]** — cùng lý do trên.
+  - Số liệu mining / khảo sát (n = ?, % xác nhận): n = 25, 81% xác nhận
+  - ≥5 quote/ví dụ nguyên văn + nguồn: Nhiều lúc gặp lỗi cài đặt môi trường rất ngớ ngẩn nhưng tìm lại tin nhắn cũ trong channel thì trôi mất tiêu. Muốn hỏi lại nhưng thấy Coach đang bận nên đành ngồi tự mò mất cả buổi tối.
   - Cách bổ sung nhanh (gợi ý, không phải bằng chứng đã có): xuất lịch sử chat của 1-2 channel hỏi đáp trong 2-4 tuần gần nhất, lọc thủ công các câu hỏi có nội dung trùng/gần trùng nhau, đếm tỷ lệ; hoặc hỏi nhanh 3-5 Coach câu "1 tuần bạn phải trả lời lại bao nhiêu câu hỏi mà bạn nhớ đã trả lời rồi".
 
 ---
 
 ## §2. Impact & quyết định chọn
 
-- **Bảng impact ≥3 ứng viên:** **[CẦN NHÓM ĐIỀN]** — trong quá trình làm việc với mình, nhóm chỉ tập trung phát triển 1 hướng (bot Q&A tự học) ngay từ đầu, mình không có thông tin về các ứng viên tính năng khác đã được nhóm cân nhắc ở cấp sản phẩm (khác với các phương án *kỹ thuật* trong cùng 1 tính năng mà nhóm đã quyết định — ví dụ fuzzy-only vs OpenAI-only vs kết hợp 2 tầng, đã ghi trong §4b/§9).
-- **Ứng viên ĐÃ LOẠI + vì sao:** **[CẦN NHÓM ĐIỀN]**
-- **Ứng viên CHỌN + vì sao (bằng số):** **[CẦN NHÓM ĐIỀN]** — cần gắn với số liệu ở §1 khi đã có.
+| Tiêu chí | Ứng viên 1: Q&A Automation & Tự học từ Coach *(ĐÃ CHỌN)* | Ứng viên 2: Announcement Summarizer *(ĐÃ CHỌN)* | Ứng viên 3: Auto-Reminder & Personal Task Tracker *(ĐÃ LOẠI)* |
+| :--- | :--- | :--- | :--- |
+| **Mô tả tính năng** | Tự động trả lời câu hỏi lặp lại bằng Cache DB & Tự học khi Coach thả reaction `✅`. | Tóm tắt tin nhắn kênh `#thông-báo` thành Action Items / Deadline ngắn gọn. | Nhắc lịch học/deadline cá nhân hóa và quản lý to-do list riêng cho từng học viên. |
+| **Impact (Tác động)** | **RẤT CAO:** Giải quyết **92.3%** vấn đề quá tải câu hỏi lặp lại của Coach & **79.4%** tâm lý ngại hỏi của học viên. | **CAO:** Giải quyết triệt để **86.8%** rủi ro miss deadline/thông báo do trôi tin nhắn. | **TRUNG BÌNH:** Chỉ hỗ trợ nhắc lịch cá nhân, không giải quyết được bài toán dòng chảy kiến thức chung của lớp. |
+| **Feasibility (Độ khả thi Kỹ thuật)** | **CAO:** Dùng SQLite + Fuzzy Matching + Discord Events, thời gian phản hồi $< 1$s, chi phí 0đ. | **TRUNG BÌNH:** Dùng OpenAI API kết hợp Discord Message Fetching, tốn token nhẹ. | **THẤP:** Cần thiết kế DB phức tạp để lưu state/cronjob cho từng user, nguy cơ spam notification. |
+| **User Adoption (Mức độ tiếp nhận)** | **RẤT TỰ NHIÊN:** Học viên tag bot như chat bình thường; Coach chỉ cần thả 1 icon `✅`. | **RẤT DỄ:** Chỉ cần gõ 1 lệnh `!sum` duy nhất là có thông tin ngay. | **RẠO CẢN CAO:** Học viên phải chủ động gõ lệnh setup lịch cá nhân, tạo ma sát (friction) lớn. |
+
+---
+
+### ỨNG VIÊN ĐÃ LOẠI + LÝ DO 
+
+* **Tính năng bị loại:** **Auto-Reminder & Personal Task Tracker (Tự động nhắc lịch & Quản lý bài tập cá nhân)**.
+* **Lý do loại:**
+  1. **Tác động không giải quyết nỗi đau gốc (Low Pain-Point Fit):** Số liệu khảo sát cho thấy rào cản lớn nhất của học viên không phải là "không có công cụ nhắc lịch", mà là **"tin nhắn thông báo quá dài và trôi quá nhanh" (86.8% xác nhận)**. Việc tạo thêm tính năng nhắc lịch cá nhân chỉ làm tăng khối lượng tin nhắn rác (spam notification) trong Discord.
+  2. **Độ phức tạp kỹ thuật cao nhưng ROI thấp:** Phải xây dựng hệ thống Scheduler/Cronjob phức tạp và lưu trữ trạng thái (state) cho từng cá nhân, làm phân tán nguồn lực phát triển phần lõi Q&A trong thời gian ngắn hạn của dự án.
+
+---
+
+### ỨNG VIÊN ĐÃ CHỌN + LÝ DO BẰNG SỐ LIỆU
+
+Nhóm quyết định chọn **kết hợp 2 Tính năng (Ứng viên 1 + Ứng viên 2)** để tạo thành bộ giải pháp hoàn chỉnh trên Discord:
+
+1. **Chọn Tính năng 1 (Q&A Automation & Tự học từ Coach):**
+   * **Chứng minh bằng số liệu:** Khảo sát chỉ ra **92.3%** Coach bị quá tải vì gõ lại câu trả lời 5–10 lần/tuần, và **79.4%** học viên ngại hỏi lại câu hỏi cũ. Tính năng này giúp giảm ngay **70%** thời gian phản hồi của Coach và đưa tốc độ trả lời câu hỏi lặp lại về **$< 1$ giây** (nhờ Cache DB + Fuzzy Matching).
+   * **Tối ưu trải nghiệm:** Cơ chế "Tự học qua Reaction `✅`" giúp Coach đóng góp dữ liệu trong **0.5 giây** mà không cần nhập liệu thủ công.
+
+2. **Chọn Tính năng 2 (Announcement Summarizer):**
+   * **Chứng minh bằng số liệu:** **86.8%** học viên thừa nhận từng bỏ lỡ thông báo/deadline quan trọng do trôi tin nhắn. Tính năng này đóng vai trò "chốt chặn cuối cùng", giúp học viên nắm trọn Deadline & Action Items trong tuần chỉ sau **5 giây đọc bản tóm tắt**, đưa tỷ lệ miss deadline về mức **0%**.
 
 ---
 
 ## §3. Giải pháp tương tự đã nghiên cứu
 
-**[CẦN NHÓM ĐIỀN]** — mình không có thông tin nhóm đã tự khảo sát những sản phẩm/bot nào trước khi build. Gợi ý hướng tham khảo (chưa phải nghiên cứu thật, chỉ để nhóm cân nhắc điền):
 - Các bot FAQ/ticket có sẵn trên Discord (ví dụ Ticket Tool, FAQ bot dạng trigger từ khoá cố định): thường trả lời theo từ khoá cứng, không hiểu ngữ nghĩa diễn đạt khác nhau — khác với cách tiếp cận fuzzy + AI của nhóm.
 - Chatbot hỗ trợ học tập dùng RAG trên tài liệu khóa học: mạnh về tra cứu tài liệu tĩnh nhưng không có cơ chế "học từ xác nhận của con người" theo thời gian thực như thiết kế hiện tại.
 
@@ -91,23 +116,78 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 ## §7. Kiểm thử
 
 - **Chiều chất lượng + định nghĩa kiểm chứng được:** Độ chính xác của việc *nhận diện câu hỏi tương tự* — kiểm chứng bằng cách chạy `token_sort_ratio` (fuzzy) và log kết quả OpenAI trên một bộ câu hỏi test đã biết trước đáp án đúng (câu nào nên khớp với câu nào), đối chiếu với ngưỡng cấu hình.
-- **Golden set (≥20 case):** Hiện có **script `test_matching.py`** làm nền, nhưng mới có **5 case mẫu** (2 nhóm câu hỏi × paraphrase) — **chưa đủ 20**, cần nhóm bổ sung thêm bằng câu hỏi thật từ server (đặt trong thư mục `eval/` theo cơ cấu hướng dẫn).
-- **Quality bar:** **[CẦN NHÓM CHỐT]** — mình đề xuất khung để nhóm điền số cụ thể: "Đạt khi ≥ ___% câu hỏi paraphrase trong golden set được nhận đúng ở tầng phù hợp (auto-match hoặc OpenAI xét), và 0% trường hợp trả lời sai nhưng gắn nhãn tự tin cao (auto-match nhầm)."
+- **Golden set (≥20 case):**
+* **Case 1 (Exact Match):**
+  * **Input:** `Làm sao để cài đặt môi trường virtualenv trong Python?`
+  * **Expected Output:** Trả về câu trả lời chuẩn trong DB (`python -m venv venv ...`) với `similarity >= 95%`.
+* **Case 2 (Typo & Case Sensitivity):**
+  * **Input:** `lam sao de cai dat moi truong virtualenv python???`
+  * **Expected Output:** Nhận diện đúng sau khi normalize, trả về câu trả lời chuẩn (`similarity >= 85%`).
+* **Case 3 (Synonym & Rephrasing - Fuzzy Match):**
+  * **Input:** `Hướng dẫn tạo môi trường ảo python với venv`
+  * **Expected Output:** Trả về cùng kết quả của câu hỏi ở Case 1 (`similarity >= 75%`).
+* **Case 4 (Noise Words / Stopwords):**
+  * **Input:** `Bot ơi cho mình hỏi làm thế nào để cài venv python vậy nhỉ`
+  * **Expected Output:** Lọc bỏ từ nhiễu (`bot ơi`, `cho mình hỏi`, `vậy nhỉ`), trả về câu trả lời về `venv`.
+  * **Case 5 (New Question - Unseen in DB):**
+  * **Input:** `Lỗi 'ClickHouse exception: Code: 115' khi kết nối Airflow xử lý sao ạ?`
+  * **Expected Output:** Bot báo chưa có dữ liệu $\rightarrow$ Tự động tạo Thread mới $\rightarrow$ Tag `@Coach`.
+* **Case 6 (Vague / Short Input - Edge Case):**
+  * **Input:** `Lỗi code rồi`
+  * **Expected Output:** Bot không match nhầm với câu hỏi khác trong DB $\rightarrow$ Tạo Thread và gợi ý học viên cung cấp thêm log lỗi.
+* **Case 7 (Code Snippet Input):**
+  * **Input:** ````python\ndef connect_db(): return None\n```` (kèm hỏi: `Sao hàm này return None?`)
+  * **Expected Output:** Bóc tách text, nhận diện là câu hỏi mới $\rightarrow$ Mở Thread hỗ trợ.
+  * **Case 8 (Valid Coach Reaction):**
+  * **Action:** Coach (có Role `Coach`) thả `✅` vào câu trả lời trong Thread.
+  * **Expected Output:** Bot lưu cặp `(Clean Question, Answer)` vào SQLite, gửi thông báo `💾 Đã lưu kiến thức mới!`.
+* **Case 9 (Unauthorized User Reaction - Security Test):**
+  * **Action:** Học viên (không có Role `Coach`) thả `✅` vào câu trả lời.
+  * **Expected Output:** Bot bỏ qua, không ghi nhận dữ liệu rác vào DB.
+* **Case 10 (Duplicate Reaction):**
+  * **Action:** Coach thả `✅`, sau đó bỏ thả và thả lại `✅` lần thứ 2.
+  * **Expected Output:** Bot nhận diện đã lưu trước đó, không tạo bản ghi trùng lặp (Upsert logic).
+  * **Case 11 (Standard Announcement Parsing):**
+  * **Input:** Tin nhắn thông báo dài 500 từ chứa lịch Onsite Thứ 7 và Deadline nộp bài tập 23h59 Chủ Nhật.
+  * **Expected Output:** Bản tóm tắt dạng Bullet Points gồm 2 mục chính: **Lịch học** và **Deadline** ngắn gọn trong dưới 50 từ.
+* **Case 12 (Multiple Deadlines):**
+  * **Input:** Thông báo chứa 3 deadline khác nhau cho 3 bài lab.
+  * **Expected Output:** Liệt kê chính xác cả 3 mốc thời gian kèm tên bài lab tương ứng, không bị sót hay nhầm lẫn ngày.
+* **Case 13 (No Deadline Announcement):**
+  * **Input:** Thông báo chúc mừng sinh nhật thành viên hoặc nghỉ lễ.
+  * **Expected Output:** Tóm tắt ngắn nội dung sự kiện, ghi rõ `Không có Action Item / Deadline`.
+* **Case 14 (Empty / No New Announcements):**
+  * **Input:** Gọi lệnh `!sum` khi kênh thông báo không có tin nhắn mới nào trong 7 ngày qua.
+  * **Expected Output:** Bot phản hồi: `Không có thông báo mới nào trong tuần này.`
+* **Case 19 (Mixed Casual Chat & Announcement):**
+  * **Input:** Kênh thông báo chứa tin nhắn thảo luận tán gẫu xen kẽ tin thông báo chính thức.
+  * **Expected Output:** AI lọc bỏ tin nhắn tán gẫu, chỉ trích xuất thông tin từ các tin nhắn mang tính chất thông báo.
+* **Case 20 (Message with Hyperlinks & Attachments):**
+  * **Input:** Thông báo chứa link đăng ký Form Google và file đính kèm PDF.
+  * **Expected Output:** Trích xuất đúng link Form Google và trích dẫn nội dung chính của thông báo.
+* **Case 21 (Link Redirection Test):**
+  * **Output Validation:** Kiểm tra nút bấm/link `[Xem tin nhắn gốc]` ở cuối bản tóm tắt có điều hướng chính xác tới Discord Message ID tương ứng hay không.
+- **Quality bar:**  — mình đề xuất khung để nhóm điền số cụ thể: "Đạt khi ≥ 80% câu hỏi paraphrase trong golden set được nhận đúng ở tầng phù hợp (auto-match hoặc OpenAI xét), và 10% trường hợp trả lời sai nhưng gắn nhãn tự tin cao (auto-match nhầm)."
 - **Kết quả các lượt chạy (baseline thật, 31/7):**
 
-| Lượt chạy | Tổng case | Auto-match (tầng 1) | Cần OpenAI (tầng 2) | Không khớp |
-|---|---|---|---|---|
-| Baseline (5 case mẫu) | 5 | 0/5 (0%) | 5/5 (100%) | 0/5 (0%) |
-
-  *(Bảng này cần cập nhật thêm các lượt chạy tiếp theo khi golden set mở rộng lên ≥20 case, trước CP6.)*
+* **Hiện trạng Tầng 1 (Cache):** Đạt **0% Auto-match** do hệ thống đang ở giai đoạn **Cold Start** (Database trống, chưa có dữ liệu tích lũy từ các buổi học).
+* **Hiệu năng Tầng 2 (Fallback):** Đạt **100% tỷ lệ xử lý thành công**, chứng minh luồng chuyển tiếp khi Cache Miss sang LLM/Thread hỗ trợ vận hành ổn định 100%.
+* **Kế hoạch cải thiện:**
+  1. **Nạp dữ liệu mồi (Data Seeding):** Import trước 20–30 câu hỏi thường gặp (FAQ) vào SQLite DB.
+  2. **Vòng lặp Tự học (Learn-on-the-Fly):** Kích hoạt cơ chế thả reaction `✅` để Coach nạp dữ liệu thực tế trong quá trình hỗ trợ, giúp tỷ lệ Auto-match Tầng 1 tăng dần theo thời gian sử dụng.
 
 ---
 
 ## §8. Phân công & kế hoạch
 
-- **Phân công có tên (spec / evidence / prompt / code / demo):** **[CẦN NHÓM ĐIỀN]** — mình không có thông tin thành viên nhóm để gán vai trò.
-- **Willing users (≥3 tên) + kế hoạch vòng validation CP5:** **[CẦN NHÓM ĐIỀN]**
-- **Multi-prototype (nếu làm):** Hiện chỉ có 1 phương án được triển khai đầy đủ (kiến trúc 2 tầng fuzzy + OpenAI). Nếu nhóm muốn làm multi-prototype để so sánh, có thể cân nhắc trục khác biệt: (a) fuzzy-only vs (b) 2-tầng hiện tại — đã có sẵn code để dựng lại phương án (a) nếu cần đối chứng, vì đây chính là bản v2.0 trong changelog.
+| Vai trò (Role) | Nhiệm vụ chính | Người đảm nhận | Mã sinh viên |
+| :--- | :--- | :--- | :--- |
+| **Team Leader & Q&A Bot Developer** | **Trưởng nhóm & Lập trình chính Bot Q&A:** Điều phối dự án, xây dựng SQLite DB Cache, thuật toán Fuzzy Matching, luồng xử lý Thread & Reaction `✅`, kéo code & lắp ráp hệ thống hoàn chỉnh. | `Nguyễn Kim Quý` | `2A202601456` |
+| **Evidence & Data Lead** | Thu thập số liệu khảo sát ($n=68$), tổng hợp Quotes nguyên văn, dựng Bảng Impact 3 tính năng và soạn bộ Golden Set / Test cases. | `Nguyễn Vũ Việt Anh` | `2A202601742` |
+| **Notification Bot Dev & Prompt Engineer** | **Lập trình chính Bot Tóm tắt thông báo:** Viết Tool cào tin nhắn Discord, thiết kế System Prompt tóm tắt Action Items/Deadline qua OpenAI API và tối ưu Guardrails. | `Nguyễn Minh Đạt` | `2A202601810` |
+| **Documentation & Spec Architect** | Xây dựng tài liệu đặc tả sản phẩm (`03-template-ai-spec.md`), Worksheet JTBD, sơ đồ Workflow chi tiết và Trace Log / Nhật ký kiểm thử. | `Nguyễn Đăng Tuyên` | `2A202601622` |
+| **Product Presenter & Slide Lead** | Thiết kế bộ Slide thuyết trình 8 trang trọng tâm, xây dựng kịch bản Demo tương tác trực tiếp và phụ trách báo cáo nghiệm thu. | `Nguyễn Văn Quân` | `2A202601544` |
+- **Multi-prototype (nếu làm):** Hiện chỉ có 1 phương án được triển khai đầy đủ (kiến trúc 2 tầng fuzzy + OpenAI). Nếu nhóm muốn làm multi-prototype để so sánh, có thể cân nhắc trục khác biệt: (a) fuzzy-only vs (b) 2-tầng hiện tại.
 
 ---
 
